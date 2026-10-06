@@ -42,7 +42,7 @@ def get_public_ip() -> str:
     except Exception as e:
         logger.warning(f"Failed to fetch public IP from ifconfig.me: {e}")
     return YOUR_SERVER_IP
-_raw_main_admin_ids = os.getenv('MAIN_ADMIN_ID', '1405866008127864852')
+_raw_main_admin_ids = os.getenv('MAIN_ADMIN_ID', '')
 MAIN_ADMIN_IDS_ENV = [uid.strip() for uid in _raw_main_admin_ids.split(',') if uid.strip()]
 MAIN_ADMIN_ID = int(MAIN_ADMIN_IDS_ENV[0])  # kept for backward-compat display purposes
 VPS_USER_ROLE_ID = int(os.getenv('VPS_USER_ROLE_ID', '1210291131301101618'))
