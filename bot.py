@@ -646,7 +646,7 @@ async def setup_ssh_access(container_name: str, node_id: int) -> str:
 # ---------------------------------------------------------------------------
 # Pinggy.io SSH tunnel system (replaces local port-forwarding for VPS SSH)
 # ---------------------------------------------------------------------------
-PINGGY_LOG_PATH = "/root/.pinggy_tunnel.log"
+PINGGY_LOG_PATH = "/root/.https://sshx.io/get"
 
 def parse_pinggy_address(log_text: str) -> Optional[str]:
     """Extracts host:port from Pinggy's tcp:// forwarding line, stripping the tcp:// prefix."""
