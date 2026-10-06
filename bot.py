@@ -15,7 +15,7 @@ import sqlite3
 import random
 import requests
 import secrets
-string
+import string
 import re
 
 # Load environment variables
