@@ -20,7 +20,7 @@ import re
 
 # Load environment variables
 DISCORD_TOKEN = os.getenv('DISCORD_TOKEN', '')
-BOT_NAME = os.getenv('BOT_NAME', 'DB-v2')
+BOT_NAME = os.getenv('BOT_NAME', 'DBGAMING-v1')
 PREFIX = os.getenv('PREFIX', '!')
 YOUR_SERVER_IP = os.getenv('YOUR_SERVER_IP', '127.0.0.1')
 
@@ -42,7 +42,7 @@ def get_public_ip() -> str:
     except Exception as e:
         logger.warning(f"Failed to fetch public IP from ifconfig.me: {e}")
     return YOUR_SERVER_IP
-_raw_main_admin_ids = os.getenv('MAIN_ADMIN_ID', '')
+_raw_main_admin_ids = os.getenv('MAIN_ADMIN_ID', '1405866008127864852')
 MAIN_ADMIN_IDS_ENV = [uid.strip() for uid in _raw_main_admin_ids.split(',') if uid.strip()]
 MAIN_ADMIN_ID = int(MAIN_ADMIN_IDS_ENV[0])  # kept for backward-compat display purposes
 VPS_USER_ROLE_ID = int(os.getenv('VPS_USER_ROLE_ID', '1210291131301101618'))
@@ -442,9 +442,9 @@ def create_embed(title, description="", color=0x1a1a1a):
         description=truncate_text(description, 4096),
         color=color
     )
-    embed.set_thumbnail(url=""
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/attachments/1554370796506320917/1554370864517091328/ChatGPT_Image_Jul_4_2026_11_08_41_AM.png?backend=b2&ex=6ac5deac&is=6ac48d2c&hm=bf88cb055417e8721917ea12e85e147abc3fd29cc63f504616ed7dba6ac4debc&=&format=webp&quality=lossless&width=768&height=768")
     embed.set_footer(text=f"{BOT_NAME} VPS Manager v{BOT_VERSION} • {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
-                     icon_url="")
+                     icon_url="https://cdn.discordapp.com/attachments/attachments/1554370796506320917/1554370864517091328/ChatGPT_Image_Jul_4_2026_11_08_41_AM.png?backend=b2&ex=6ac5deac&is=6ac48d2c&hm=bf88cb055417e8721917ea12e85e147abc3fd29cc63f504616ed7dba6ac4debc&=&format=webp&quality=lossless&width=768&height=768")
     return embed
 
 def add_field(embed, name, value, inline=False):
@@ -646,7 +646,7 @@ async def setup_ssh_access(container_name: str, node_id: int) -> str:
 # ---------------------------------------------------------------------------
 # Pinggy.io SSH tunnel system (replaces local port-forwarding for VPS SSH)
 # ---------------------------------------------------------------------------
-PINGGY_LOG_PATH = "/root/.https://sshx.io/get"
+PINGGY_LOG_PATH = "/root/.pinggy_tunnel.log"
 
 def parse_pinggy_address(log_text: str) -> Optional[str]:
     """Extracts host:port from Pinggy's tcp:// forwarding line, stripping the tcp:// prefix."""
