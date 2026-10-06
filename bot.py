@@ -20,7 +20,7 @@ import re
 
 # ---- TOKEN CONFIGURATION ----
 # Yahan apna asli Discord Bot Token seedha daal do taaki env variable ki problem na aaye
-DISCORD_TOKEN = "MTU1NjkwNjU4NTAwNjE1MzgxOA.G7JujZ.PYgYq0E8KBAADCt5CVD8JtTfdknXPqF5iOE_8I"
+DISCORD_TOKEN = ""
 
 BOT_NAME = os.getenv('BOT_NAME', 'DB-v2')
 PREFIX = os.getenv('PREFIX', '!')
