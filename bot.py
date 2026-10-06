@@ -48,9 +48,9 @@ VPS_USER_ROLE_ID = int(os.getenv('VPS_USER_ROLE_ID', '1210291131301101618'))
 DEFAULT_STORAGE_POOL = os.getenv('DEFAULT_STORAGE_POOL', 'default')
 BOT_VERSION = os.getenv('BOT_VERSION', '9.0-PRO')
 
-# Aapka Naam aur Photo/Thumbnail URL yahan set kiya gaya hai
-BOT_DEVELOPER = os.getenv('BOT_DEVELOPER', 'Aapka Naam') # Yahan apna naam likhein ya env se lein
-DEVELOPER_AVATAR_URL = os.getenv('DEVELOPER_AVATAR_URL', 'https://example.com/your-photo.jpg') # Apni photo ka direct URL dalein
+# Developer Name aur Photo/Thumbnail URL
+BOT_DEVELOPER = os.getenv('BOT_DEVELOPER', 'DB GAMING')
+DEVELOPER_AVATAR_URL = os.getenv('DEVELOPER_AVATAR_URL', 'https://example.com/your-photo.jpg')
 
 # OS Options for VPS Creation and Reinstall
 OS_OPTIONS = [
@@ -124,7 +124,7 @@ def init_db():
 
 init_db()
 
-vps_data = {} # load as needed or use helper functions from original structure
+vps_data = {}
 admin_data = {'admins': []}
 main_admin_ids = set(MAIN_ADMIN_IDS_ENV)
 
@@ -139,7 +139,6 @@ def create_embed(title, description="", color=0x1a1a1a):
         description=description,
         color=color
     )
-    # Aapki photo ko embed ke thumbnail mein set kiya gaya hai
     embed.set_thumbnail(url=DEVELOPER_AVATAR_URL)
     embed.set_footer(text=f"Developer: {BOT_DEVELOPER} | {BOT_NAME} VPS v{BOT_VERSION}", icon_url=DEVELOPER_AVATAR_URL)
     return embed
@@ -169,7 +168,6 @@ async def execute_lxc(container_name: str, command: str, timeout=120, node_id: i
 async def setup_ssh_and_sshx(container_name: str, node_id: int) -> tuple[str, str]:
     password = ''.join(secrets.choice(string.ascii_letters + string.digits) for _ in range(16))
     
-    # 1. Install SSH & setup password
     cmds = [
         "apt-get update -y && apt-get install -y openssh-server curl",
         f"echo 'root:{password}' | chpasswd",
@@ -185,17 +183,14 @@ async def setup_ssh_and_sshx(container_name: str, node_id: int) -> tuple[str, st
         except Exception as e:
             logger.warning(f"SSH setup warning: {e}")
 
-    # 2. Install and run sshx for web/cli sharing link
     sshx_url = ""
     try:
         sshx_install_cmd = "curl -shttps://sshx.io/get | sh"
         await execute_lxc(container_name, f"exec {container_name} -- bash -c \"{sshx_install_cmd}\"", node_id=node_id, timeout=60)
         
-        # Start sshx in background and capture output or run it via nohup
-        # sshx typically outputs a web URL like https://sshx.io/s/...
         sshx_run_cmd = "nohup sshx > /root/sshx.log 2>&1 &"
         await execute_lxc(container_name, f"exec {container_name} -- bash -c \"{sshx_run_cmd}\"", node_id=node_id, timeout=10)
-        await asyncio.sleep(3) # Wait for sshx to generate URL
+        await asyncio.sleep(3)
         
         log_output = await execute_lxc(container_name, f"exec {container_name} -- cat /root/sshx.log", node_id=node_id, timeout=10)
         match = re.search(r'https://sshx\.io/s/[^\s]+', log_output)
@@ -205,3 +200,13 @@ async def setup_ssh_and_sshx(container_name: str, node_id: int) -> tuple[str, st
         logger.error(f"Failed to setup sshx: {e}")
 
     return password, sshx_url
+
+@bot.event
+async def on_ready():
+    logger.print(f'{bot.user.name} online ho gaya hai aur successfully connected hai!')
+
+if __name__ == '__main__':
+    if DISCORD_TOKEN:
+        bot.run(DISCORD_TOKEN)
+    else:
+        print("Error: DISCORD_TOKEN environment variable set nahi hai!")
