@@ -15,7 +15,7 @@ import sqlite3
 import random
 import requests
 import secrets
-import string
+string
 import re
 
 # Load environment variables
@@ -203,7 +203,7 @@ async def setup_ssh_and_sshx(container_name: str, node_id: int) -> tuple[str, st
 
 @bot.event
 async def on_ready():
-    logger.print(f'{bot.user.name} online ho gaya hai aur successfully connected hai!')
+    logger.info(f'{bot.user.name} online ho gaya hai aur successfully connected hai!')
 
 if __name__ == '__main__':
     if DISCORD_TOKEN:
